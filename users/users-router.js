@@ -2,6 +2,8 @@ const router = require('express').Router();
 const Users = require('./users-model');
 const restricted = require("../auth/restricted-middleware");
 
+let admin_id = process.env.ADMIN_ID || 1000000;
+
 router.get("/", (req,res) => {
     Users.getAll().then(users =>
     res.status(201).json(users))
@@ -76,7 +78,7 @@ router.delete('/', restricted, (req, res) => {
 })
 
 router.delete('/:id', restricted, (req, res) => {
-    if (req.decodedJwt.id === 2) {
+    if (req.decodedJwt.id === admin_id) {
         Users.remove(req.params.id)
         .then(user => {
             if (!user) {
