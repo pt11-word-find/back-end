@@ -54,10 +54,26 @@ function isWristband(arr) {
 	}
     if (horizontal) return true
     // check vertical
-
+    let vertical = true
+    for (i = 0; i < arr[0].length; i++) {
+        for(j = 0; j < arr.length; j++) {
+            if (arr[j][i] !== arr[0][i]) vertical = false
+        }
+    }
+    if (vertical) return true
+    // check upper left / lower right diagonal
+    let leftdiag = true
+    for (i = 0; i < arr.length; i++) {
+        for(j = 0; j < arr[i].length; j++) {
+            if (arr[i][j] !== arr[(i+1) % arr.length][(j+1) % arr[0].length]) leftdiag= false
+        }
+    }
+    if (leftdiag) return true
 
     return false
 }
 
 console.log(isWristband([[1,1],[2,2],[3,3]]))
 console.log(isWristband([[1,2],[1,2],[1,2]]))
+console.log(isWristband([[1,2,3],[3,1,2],[2,3,1]]))
+console.log(isWristband([[1,2,3],[2,3,1],[3,1,2]]))
