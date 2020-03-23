@@ -24,4 +24,40 @@ const printPi = len => {
     
 }
 
-console.log(printPi(5))
+function isPrefix(word, prefix) {
+    console.log(word.substr(0, prefix.length-1))
+	if (word.substr(0, prefix.length-1) === prefix.replace("-", "")) return true
+	return false
+}
+function isSuffix(word, suffix) {
+    console.log(word.substr(word.length -suffix.length + 1, word.length))
+    if ( word.substr(word.length -suffix.length + 1, word.length) === suffix.replace("-", "")) return true
+    return false
+}
+
+function isSpecialArray(arr) {
+	for (i = 0; i < arr.length; i++) {
+		if (i % 2 === 1 && arr[i] % 2 !== 1) return false
+		if (i % 2 === 0 && arr[i] % 2 !== 0) return false
+		return true
+	}
+}
+
+
+function isWristband(arr) {
+	// check horizontal
+	let horizontal = true
+	for (i = 0; i < arr.length; i++) {
+		for (j = 0; j < arr[0].length; j++) {
+			if (arr[i][j] !== arr[i][0]) horizontal = false
+		}
+	}
+    if (horizontal) return true
+    // check vertical
+
+
+    return false
+}
+
+console.log(isWristband([[1,1],[2,2],[3,3]]))
+console.log(isWristband([[1,2],[1,2],[1,2]]))
