@@ -81,6 +81,9 @@ function isWristband(arr) {
 }
 
 console.log(isWristband([[1,1],[2,2],[3,3]]))
-console.log(isWristband([[1,2],[1,2],[1,2]]))
+console.log(isWristband([['A', 'B', 'C'], 
+['C', 'A', 'B'], 
+['B', 'C', 'A'], 
+['A', 'B', 'C']]))
 console.log(isWristband([[1,2,3],[3,1,2],[2,3,1]]))
 console.log(isWristband([[1,2,3],[2,3,1],[3,1,2]]))
