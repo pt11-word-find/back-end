@@ -19,4 +19,9 @@ const firstIndex = (hex, needle) => {
 
 }
 
-console.log(firstIndex("68 65 6c 6c 6f 20 77 6f 72 6c 64", "world"))
+const printPi = len => {
+    return Math.round(Math.PI * (10 ** len)) / (10 ** len)
+    
+}
+
+console.log(printPi(5))
