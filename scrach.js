@@ -69,6 +69,13 @@ function isWristband(arr) {
         }
     }
     if (leftdiag) return true
+    let rightdiag = true
+    for (i = 0; i < arr.length; i++) {
+        for(j = 0; j < arr[i].length; j++) {
+            if (arr[i][j] !== arr[(i+1) % arr.length][j-1 < 0 ? arr.length -1 : (j-1) % arr[0].length]) rightdiag= false
+        }
+    }
+    if (rightdiag) return true
 
     return false
 }
