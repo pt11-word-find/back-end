@@ -17,34 +17,6 @@ router.get("/me", restricted, (req,res) => {
 })
 
 router.put('/', restricted, (req,res) => {
-    let {zaddr, twitter, website} = req.body;
-    const id = req.decodedJwt.id;
-    if (website) {
-        if (!website.includes("https://") && !website.includes("http://")) {
-            website = `https://${website}`
-        } 
-    }
-    if (twitter){
-        req.body.twitter = twitter.replace("https://", "").replace("www.", "").replace("twitter.com/", "").replace("http://", "").replace("@", "")
-    }
-    var schema = new validator();
-    // req.body.modified = Date.now();
-    schema
-        .is().min(78)                                    
-        .is().max(78)                                  
-        let firstTwo = "";      
-        if (zaddr) {
-            firstTwo = zaddr.split("").slice(0,2).join("");
-        }
-        console.log(firstTwo)
-    if(zaddr){
-        if (firstTwo!=="zs" || !schema.validate(zaddr)){
-            res.status(500).json({
-            message: 'Your zaddr is invalid.'
-            })
-            return;
-        }
-    }
     
     if (req.body.password) {
         delete req.body.password
