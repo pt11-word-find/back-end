@@ -19,7 +19,7 @@ The endpoints at `/auth/login` and `/auth/register` expect an object with the fo
 
 Both fields are required. Usernames must be unique.
 
-The POST/PUT endpoints at /wordlists expect objects with the following format:
+The POST/PUT endpoints at `/wordlists` expect objects with the following format:
 
 `
 {
@@ -31,4 +31,4 @@ The POST/PUT endpoints at /wordlists expect objects with the following format:
 
 PUT and DELETE operations should be restricted to only the user's own puzzles.
 
-The POST/PUT/DELETE endpoints at /users will likely not be used and should be restricted from general users.
+The POST/PUT/DELETE endpoints at `/users` will likely not be used and should be restricted from general users. GET is available for user profiles. 
