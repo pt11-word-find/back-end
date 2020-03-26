@@ -5,7 +5,8 @@ module.exports = {
     getAll,
     findById,
     findBy,
-    remove
+    remove,
+    update
 }
 
 async function add(wordlist) {
@@ -18,7 +19,7 @@ function findBy(filter) {
 }
 
 function getAll() {
-    return db('wordlists').select('id', 'username')
+    return db('wordlists')
 }
 
 function findById(id) {
@@ -31,4 +32,10 @@ function remove(id) {
     .where({ id })
     .first()
     .del();
+  }
+
+  function update(id, changes) {
+    return db('wordlists')
+      .where({id})
+      .update(changes, '*').returning("*");
   }
