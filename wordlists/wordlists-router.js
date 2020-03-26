@@ -2,7 +2,7 @@ const router = require("express").Router();
 const Users = require("./wordlists-model");
 
 router.get("/", (req, res) => {
-  Users.getAll(req.query)
+  Users.getAll()
     .then(users => {
       res.status(200).json(users);
     })
@@ -23,10 +23,11 @@ router.get("/:id", (req, res) => {
 
 router.post("/", (req, res) => {
   const body = req.body;
+  console.log(body);
   Users.add(body)
-    .then(body => {
+    .then(post => {
       if (body.wordlist && body.title) {
-        res.status(201).json(body);
+        res.status(201).json(post);
       } else {
         res.status(400).json({ errorMessage: "input a wordlist and title" });
       }
@@ -38,6 +39,18 @@ router.post("/", (req, res) => {
 
 router.put("/:id", (req, res) => {});
 
-router.delete("/:id", (req, res) => {});
+router.delete("/:id", (req, res) => {
+  Users.remove(req.params.id)
+  .then(deleted => {
+    if(deleted){
+      res.status(200).end()
+    } else {
+      res.status(404).json({ errorMessage: "user doesn't exist"})
+    }
+  })
+  .catch(err => {
+    res.status(500).json({ errorMessage: "server error"})
+  })
+});
 
 module.exports = router;
