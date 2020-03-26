@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Users = require("./wordlists-model");
+const restricted= require("../auth/restricted-middleware")
 
 router.get("/", (req, res) => {
   Users.getAll()
@@ -21,8 +22,10 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
+router.post("/", restricted, (req, res) => {
   const body = req.body;
+  body.user_id = req.decodedJwt.id;
+  console.log(req.decodedJwt)
   console.log(body);
   Users.add(body)
     .then(post => {
@@ -37,7 +40,7 @@ router.post("/", (req, res) => {
     });
 });
 
-router.put("/:id", (req, res) => {});
+router.put("/:id", restricted, (req, res) => {});
 
 router.delete("/:id", (req, res) => {
   Users.remove(req.params.id)
