@@ -4,7 +4,7 @@ This currently supports authentication endpoints and an (as yet) unrestricted da
 
 ## Deployment details
 
-There is no deployment as yet. That's on ya'll.
+https://wordlist-backend.herokuapp.com/
 
 ### Endpoint info:
 
