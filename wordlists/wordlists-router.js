@@ -1,9 +1,10 @@
 const router = require("express").Router();
-const Users = require("./wordlists-model");
-const restricted= require("../auth/restricted-middleware")
+const Wordlists = require("./wordlists-model");
+const restricted= require("../auth/restricted-middleware");
+const wordlistValidator = require("./wordlist-validator");
 
 router.get("/", (req, res) => {
-  Users.getAll()
+  Wordlists.getAll()
     .then(users => {
       res.status(200).json(users);
     })
@@ -12,8 +13,18 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/count", (req, res) => {
+  Wordlists.getCount()
+    .then(users => {
+      res.status(200).json(users[0].CNT);
+    })
+    .catch(err => {
+      res.status(500).json({ errorMessage: "error getting data" });
+    });
+});
+
 router.get("/:id", (req, res) => {
-  Users.findById(req.params.id)
+  Wordlists.findById(req.params.id)
     .then(user => {
       res.status(200).json(user);
     })
@@ -24,26 +35,25 @@ router.get("/:id", (req, res) => {
 
 router.post("/", restricted, (req, res) => {
   const body = req.body;
+  body.wordlist = wordlistValidator(body.wordlist).split(",").map(item => item.trim()).filter(item => item.length > 0).join(",")
   body.user_id = req.decodedJwt.id;
-  console.log(req.decodedJwt)
-  console.log(body);
-  Users.add(body)
-    .then(post => {
-      if (body.wordlist && body.title) {
-        res.status(201).json(post);
-      } else {
-        res.status(400).json({ errorMessage: "input a wordlist and title" });
-      }
-    })
-    .catch(err => {
-      res.status(500).json({ errorMessage: "error bad request" });
-    });
+  if (body.wordlist && body.title) {
+    Wordlists.add(body)
+      .then(post => {
+          res.status(201).json(post);
+      })
+      .catch(err => {
+        res.status(500).json({ errorMessage: "error bad request" });
+      });
+  }  else {
+    res.status(400).json({ errorMessage: "input a wordlist and title" });
+  }
 });
 
 router.put("/:id", restricted, (req, res) => {});
 
 router.delete("/:id", (req, res) => {
-  Users.remove(req.params.id)
+  Wordlists.remove(req.params.id)
   .then(deleted => {
     if(deleted){
       res.status(200).end()

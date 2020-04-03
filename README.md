@@ -1,12 +1,14 @@
 # Backend for PT11 word-find app
 
-This currently supports authentication endpoints and an (as yet) unrestricted database for users to add their own lists of words.
+This currently supports authentication endpoints and a database for users to add their own lists of words.
 
 ## Deployment details
 
-https://wordlist-backend.herokuapp.com/
+Api and postgres db hosted via heroku. API base url: https://wordlist-backend.herokuapp.com/
 
 ### Endpoint info:
+
+Any user can get the list of puzzles in order to play one. In order to add/delete puzzles, a user must create an account.
 
 The endpoints at `/auth/login` and `/auth/register` expect an object with the following format:
 
@@ -23,7 +25,7 @@ The POST/PUT endpoints at `/wordlists` expect objects with the following format:
 
 `
 {
-    user_id: 1 (this references an existing user's id)
+    user_id: 1 (this references an existing user's id) - This will be taken from the request auth token
     wordlist: "string,of,comma,separated,words"
     title: "descriptive title for wordlist"
 }

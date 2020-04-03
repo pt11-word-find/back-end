@@ -6,7 +6,12 @@ module.exports = {
     findById,
     findBy,
     remove,
-    update
+    update,
+    getCount
+}
+
+function getCount() {
+    return db('wordlists').count("id as CNT")
 }
 
 async function add(wordlist) {
