@@ -23,7 +23,7 @@ The POST/PUT endpoints at `/wordlists` expect objects with the following format:
 
 `
 {
-    user_id: 1 (this references an existing user's id)
+    user_id: 1 (this references an existing user's id) - This will be taken from the request auth token
     wordlist: "string,of,comma,separated,words"
     title: "descriptive title for wordlist"
 }
