@@ -34,7 +34,7 @@ router.get("/:id", (req, res) => {
 
 router.post("/", restricted, (req, res) => {
   const body = req.body;
-  body.wordlist = body.wordlist.split(" ,").join(",").split(", ").join(",")
+  body.wordlist = body.wordlist.split(",").map(item => item.trim()).join(",")
   body.user_id = req.decodedJwt.id;
   console.log(req.decodedJwt)
   console.log(body);
