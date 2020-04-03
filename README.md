@@ -4,7 +4,7 @@ This currently supports authentication endpoints and a database for users to add
 
 ## Deployment details
 
-https://wordlist-backend.herokuapp.com/
+Api and postgres db hosted via heroku. API base url: https://wordlist-backend.herokuapp.com/
 
 ### Endpoint info:
 
