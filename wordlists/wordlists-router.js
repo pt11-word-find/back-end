@@ -35,7 +35,7 @@ router.get("/:id", (req, res) => {
 
 router.post("/", restricted, (req, res) => {
   const body = req.body;
-  body.wordlist = wordlistValidator(body.wordlist).split(",").map(item => item.trim()).join(",")
+  body.wordlist = wordlistValidator(body.wordlist).split(",").map(item => item.trim()).filter(item => item.length > 0).join(",")
   body.user_id = req.decodedJwt.id;
   if (body.wordlist && body.title) {
     Wordlists.add(body)
