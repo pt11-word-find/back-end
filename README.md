@@ -8,6 +8,8 @@ https://wordlist-backend.herokuapp.com/
 
 ### Endpoint info:
 
+Any user can get the list of puzzles in order to play one. In order to add/delete puzzles, a user must create an account.
+
 The endpoints at `/auth/login` and `/auth/register` expect an object with the following format:
 
 `
