@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Wordlists = require("./wordlists-model");
-const restricted= require("../auth/restricted-middleware")
+const restricted= require("../auth/restricted-middleware");
+const wordlistValidator = require("./wordlist-validator");
 
 router.get("/", (req, res) => {
   Wordlists.getAll()
@@ -34,10 +35,8 @@ router.get("/:id", (req, res) => {
 
 router.post("/", restricted, (req, res) => {
   const body = req.body;
-  body.wordlist = body.wordlist.split(",").map(item => item.trim()).join(",")
+  body.wordlist = wordlistValidator(body.wordlist).split(",").map(item => item.trim()).join(",")
   body.user_id = req.decodedJwt.id;
-  console.log(req.decodedJwt)
-  console.log(body);
   if (body.wordlist && body.title) {
     Wordlists.add(body)
       .then(post => {
