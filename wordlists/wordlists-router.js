@@ -7,9 +7,19 @@ const admin_id = 30;
 
 
 router.get("/", (req, res) => {
+  Wordlists.getAllApproved()
+    .then(wordlists => {
+      res.status(200).json(wordlists);
+    })
+    .catch(err => {
+      res.status(500).json({ errorMessage: "error getting data" });
+    });
+});
+
+router.get("/all", (req, res) => {
   Wordlists.getAll()
-    .then(users => {
-      res.status(200).json(users);
+    .then(wordlists => {
+      res.status(200).json(wordlists);
     })
     .catch(err => {
       res.status(500).json({ errorMessage: "error getting data" });

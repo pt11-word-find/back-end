@@ -8,7 +8,8 @@ module.exports = {
     remove,
     update,
     getCount,
-    getUserPuzzles
+    getUserPuzzles,
+    getAllApproved
 }
 
 function getCount() {
