@@ -3,6 +3,9 @@ const Wordlists = require("./wordlists-model");
 const restricted= require("../auth/restricted-middleware");
 const wordlistValidator = require("./wordlist-validator");
 
+const admin_id = 30;
+
+
 router.get("/", (req, res) => {
   Wordlists.getAll()
     .then(users => {
@@ -37,8 +40,12 @@ router.get("/mine", restricted, (req, res) => {
 
 router.get("/:id", (req, res) => {
   Wordlists.findById(req.params.id)
-    .then(user => {
-      res.status(200).json(user);
+    .then(wordlist => {
+      if (wordlist) {
+      res.status(200).json(wordlist);
+      } else {
+        res.status(404).json({message: "Wordlist not found"})
+      }
     })
     .catch(err => {
       res.status(404).json({ errorMessage: "user not found" });
@@ -66,18 +73,29 @@ router.post("/", restricted, (req, res) => {
 
 router.put("/:id", restricted, (req, res) => {});
 
-router.delete("/:id", (req, res) => {
-  Wordlists.remove(req.params.id)
-  .then(deleted => {
-    if(deleted){
-      res.status(200).end()
-    } else {
-      res.status(404).json({ errorMessage: "user doesn't exist"})
+router.delete("/:id", restricted, (req, res) => {
+  const user_id = req.decodedJwt.id;
+  Wordlists.findById(req.params.id)
+  .then(wordlist => {
+      if (wordlist.user_id === user_id || user_id === admin_id) {
+      Wordlists.remove(req.params.id)
+      .then(deleted => {
+        if(deleted){
+          res.status(200).json({message: "item deleted", id: Number(req.params.id)})
+        } 
+      })
+      .catch(err => {
+        res.status(500).json({ errorMessage: "server error"})
+      })
+    }
+    else {
+      res.status(401).json({message: "cmon now"})
     }
   })
   .catch(err => {
-    res.status(500).json({ errorMessage: "server error"})
-  })
+    res.status(404).json({ errorMessage: "user not found" });
+  });
+  
 });
 
 module.exports = router;
