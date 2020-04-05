@@ -1,37 +1,60 @@
-function reverseLegoYoda(text) {
-	let sentences = text.split(". ")
-	console.log(sentences)
-	let output = sentences.map(item => phraseFlipper(item))
-	return output.join(". ") +"."
-}
+function getHashTags(str) {
+	let arr = str.split(" ")
+	let longestThree = []
+	for (let i = 0; i < arr.length; i++) {
+		if (longestThree.length >= 3) {
+			if (arr[i].length > longestThree[0].length) {
+				console.log("longer")
+				longestThree.shift()
+				longestThree.push(arr[i])
 
-function phraseFlipper(text) {
-	let beginning = decapitalize(text.split(", ")[0])
-	let ending = capitalize(text.split(", ")[1].replace(".",""))
-
-	return ending + " " + beginning;
-}
-
-function capitalize(str) {
-	let output = ""
-	for (let i = 0; i < str.length; i++) {
-		if (i === 0) {output += str[i].toUpperCase()}
-		else {output += str[i]}
+			}
+		}	else {
+			longestThree.push(arr[i])
+			console.log(longestThree)
+			longestThree = longestThree.sort((a,b) => a.length - b.length)
+		}
 	}
-	return output
+	return longestThree.map(item => `#${item.toLowerCase()}`).sort((a,b) => b.length - a.length)
 }
 
-function decapitalize(str) {
-	let output = ""
-	for (let i = 0; i < str.length; i++) {
-		if (i === 0) {output += str[i].toLowerCase()}
-		else {output += str[i]}
-	}
-	return output
-}
+console.log(getHashTags("Are You an Elite Entrepreneur?"))
 
-console.log(reverseLegoYoda("Hit you with my stick, I shall."))
-console.log(reverseLegoYoda("Rejected me, my crush has. Ketamine, I need."))
+
+// function reverseLegoYoda(text) {
+// 	let sentences = text.split(". ")
+// 	console.log(sentences)
+// 	let output = sentences.map(item => phraseFlipper(item))
+// 	return output.join(". ") +"."
+// }
+
+// function phraseFlipper(text) {
+// 	let beginning = decapitalize(text.split(", ")[0])
+// 	let ending = capitalize(text.split(", ")[1].replace(".",""))
+
+// 	return ending + " " + beginning;
+// }
+
+// function capitalize(str) {
+// 	let output = ""
+// 	for (let i = 0; i < str.length; i++) {
+// 		if (i === 0) {output += str[i].toUpperCase()}
+// 		else {output += str[i]}
+// 	}
+// 	return output
+// }
+
+// function decapitalize(str) {
+// 	let output = ""
+// 	for (let i = 0; i < str.length; i++) {
+// 		if (i === 0) {output += str[i].toLowerCase()}
+// 		else {output += str[i]}
+// 	}
+// 	return output
+// }
+
+// console.log(reverseLegoYoda("Hit you with my stick, I shall."))
+// console.log(reverseLegoYoda("Rejected me, my crush has. Ketamine, I need."))
 
 // function routeTracer(grid, input) {
 // 	let myPos = []
