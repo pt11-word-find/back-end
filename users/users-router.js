@@ -16,6 +16,8 @@ router.get("/me", restricted, (req,res) => {
     })
 })
 
+
+
 router.put('/', restricted, (req,res) => {
     
     if (req.body.password) {

@@ -27,6 +27,9 @@ function findBy(filter) {
 function getAll() {
     return db('wordlists')
 }
+function getAllApproved() {
+    return db('wordlists').where({approved: true})
+}
 
 function getUserPuzzles(user_id) {
     return db('wordlists').where({user_id})

@@ -1,24 +1,50 @@
-function getHashTags(str) {
-	let arr = str.split(" ")
-	let longestThree = []
-	for (let i = 0; i < arr.length; i++) {
-		if (longestThree.length >= 3) {
-			if (arr[i].length > longestThree[0].length) {
-				console.log("longer")
-				longestThree.shift()
-				longestThree.push(arr[i])
-
-			}
-		}	else {
-			longestThree.push(arr[i])
-			console.log(longestThree)
-			longestThree = longestThree.sort((a,b) => a.length - b.length)
-		}
+function sortContacts(names, sort) {
+	if (!names) return []
+	
+	if (sort === "ASC") {
+		return names.sort((a,b) => alphabetizeDesc(a,b))
+	} else {
+		return names.sort((a,b) => alphabetize(a,b))
 	}
-	return longestThree.map(item => `#${item.toLowerCase()}`).sort((a,b) => b.length - a.length)
 }
 
-console.log(getHashTags("Are You an Elite Entrepreneur?"))
+function alphabetize(word1, word2) {
+	for (i = 0; i < word1.length; i++) {
+		if (word1.charCodeAt(i) > word2.charCodeAt(i)) {
+			return 1
+		} else if (word2.charCodeAt(i) > word1.charCodeAt(i)) {
+			return -1
+		}
+	}
+}
+
+function alphabetizeDesc(word1, word2) {
+	for (i = 0; i < word1.length; i++) {
+		if (word1.charCodeAt(i) < word2.charCodeAt(i)) {
+			return -1
+		} else if (word2.charCodeAt(i) < word1.charCodeAt(i)) {
+			return 1
+		}
+	}
+}
+
+console.log(sortContacts(['John Locke', 'Thomas Aquinas', 'David Hume', 'Rene Descartes'], 'ASC'))
+
+// function removeWordsLastVowel(word) {
+// 	const vowels = ["a", "e", "i", "o", "u"];
+// 	if (word.length = 1 && vowels.includes(word)) return ""
+// 	let lastVowel = -1;
+// 	for (i = 0 ; i < word.length ; i++) {
+// 		if (vowels.includes(word[i].toLowerCase())) {
+// 			lastVowel = i
+// 		}
+// 	}
+// 	if (lastVowel !== -1) {
+// 		return word.substring(0,lastVowel) + (word.length !== lastVowel + 1 ? word.substring(lastVowel+1) : "")
+// 	}
+// }
+
+// console.log(removeWordsLastVowel("taz"))
 
 
 // function reverseLegoYoda(text) {

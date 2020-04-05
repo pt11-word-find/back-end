@@ -69,7 +69,21 @@ router.post("/", restricted, (req, res) => {
   }
 });
 
-
+router.put("/approve/:id", restricted, (req,res) => {
+  const {id} = req.params;
+  if (req.decodedJwt.id === 4) {
+    Wordlists.update(id, {approved: true})
+    .then( wordlist => {
+      res.status(200).json({message: `puzzle ${id} has been approved.`}) 
+    })
+    .catch(err => {
+        res.status(500).json({message: 'Unable to update', error: err})
+    })
+  }
+  else {
+      res.status(401).json({message: "come on man"})
+  }
+})
 
 router.put("/:id", restricted, (req, res) => {});
 
