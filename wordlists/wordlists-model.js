@@ -7,7 +7,8 @@ module.exports = {
     findBy,
     remove,
     update,
-    getCount
+    getCount,
+    getUserPuzzles
 }
 
 function getCount() {
@@ -26,6 +27,11 @@ function findBy(filter) {
 function getAll() {
     return db('wordlists')
 }
+
+function getUserPuzzles(user_id) {
+    return db('wordlists').where({user_id})
+}
+
 
 function findById(id) {
     return db('wordlists')

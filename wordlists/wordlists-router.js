@@ -23,6 +23,18 @@ router.get("/count", (req, res) => {
     });
 });
 
+router.get("/mine", restricted, (req, res) => {
+  const user_id = req.decodedJwt.id;
+    Wordlists.getUserPuzzles(user_id)
+      .then(post => {
+          res.status(201).json(post);
+      })
+      .catch(err => {
+        res.status(500).json({ errorMessage: "error bad request" });
+      });
+  
+});
+
 router.get("/:id", (req, res) => {
   Wordlists.findById(req.params.id)
     .then(user => {
@@ -49,6 +61,8 @@ router.post("/", restricted, (req, res) => {
     res.status(400).json({ errorMessage: "input a wordlist and title" });
   }
 });
+
+
 
 router.put("/:id", restricted, (req, res) => {});
 
