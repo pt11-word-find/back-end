@@ -81,7 +81,7 @@ router.post("/", restricted, (req, res) => {
 
 router.put("/approve/:id", restricted, (req,res) => {
   const {id} = req.params;
-  if (req.decodedJwt.id === 4) {
+  if (req.decodedJwt.id === 30) {
     Wordlists.update(id, {approved: true})
     .then( wordlist => {
       res.status(200).json({message: `puzzle ${id} has been approved.`}) 
