@@ -25,7 +25,6 @@ router.get("/count", (req, res) => {
 
 router.get("/mine", restricted, (req, res) => {
   const user_id = req.decodedJwt.id;
-  console.log(user_id)
     Wordlists.getUserPuzzles(user_id)
       .then(post => {
           res.status(201).json(post);
