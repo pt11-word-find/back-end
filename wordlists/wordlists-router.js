@@ -3,7 +3,7 @@ const Wordlists = require("./wordlists-model");
 const restricted= require("../auth/restricted-middleware");
 const wordlistValidator = require("./wordlist-validator");
 
-const admin_id = 30;
+const admin_ids = [13, 30];
 
 
 router.get("/", (req, res) => {
@@ -82,7 +82,7 @@ router.post("/", restricted, (req, res) => {
 
 router.put("/approve/:id", restricted, (req,res) => {
   const {id} = req.params;
-  if (req.decodedJwt.id === 30) {
+  if (admin_ids.includes(req.decodedJwt.id)) {
     Wordlists.update(id, {approved: true})
     .then( wordlist => {
       res.status(200).json({message: `puzzle ${id} has been approved.`}) 
@@ -102,7 +102,7 @@ router.delete("/:id", restricted, (req, res) => {
   const user_id = req.decodedJwt.id;
   Wordlists.findById(req.params.id)
   .then(wordlist => {
-      if (wordlist.user_id === user_id || user_id === admin_id) {
+      if (wordlist.user_id === user_id || admin_ids.includes(user_id)) {
       Wordlists.remove(req.params.id)
       .then(deleted => {
         if(deleted){
