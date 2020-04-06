@@ -1,37 +1,86 @@
-function reverseLegoYoda(text) {
-	let sentences = text.split(". ")
-	console.log(sentences)
-	let output = sentences.map(item => phraseFlipper(item))
-	return output.join(". ") +"."
-}
-
-function phraseFlipper(text) {
-	let beginning = decapitalize(text.split(", ")[0])
-	let ending = capitalize(text.split(", ")[1].replace(".",""))
-
-	return ending + " " + beginning;
-}
-
-function capitalize(str) {
-	let output = ""
-	for (let i = 0; i < str.length; i++) {
-		if (i === 0) {output += str[i].toUpperCase()}
-		else {output += str[i]}
+function sortContacts(names, sort) {
+	if (!names) return []
+	
+	if (sort === "ASC") {
+		return names.sort((a,b) => alphabetizeDesc(a,b))
+	} else {
+		return names.sort((a,b) => alphabetize(a,b))
 	}
-	return output
 }
 
-function decapitalize(str) {
-	let output = ""
-	for (let i = 0; i < str.length; i++) {
-		if (i === 0) {output += str[i].toLowerCase()}
-		else {output += str[i]}
+function alphabetize(word1, word2) {
+	for (i = 0; i < word1.length; i++) {
+		if (word1.charCodeAt(i) > word2.charCodeAt(i)) {
+			return 1
+		} else if (word2.charCodeAt(i) > word1.charCodeAt(i)) {
+			return -1
+		}
 	}
-	return output
 }
 
-console.log(reverseLegoYoda("Hit you with my stick, I shall."))
-console.log(reverseLegoYoda("Rejected me, my crush has. Ketamine, I need."))
+function alphabetizeDesc(word1, word2) {
+	for (i = 0; i < word1.length; i++) {
+		if (word1.charCodeAt(i) < word2.charCodeAt(i)) {
+			return -1
+		} else if (word2.charCodeAt(i) < word1.charCodeAt(i)) {
+			return 1
+		}
+	}
+}
+
+console.log(sortContacts(['John Locke', 'Thomas Aquinas', 'David Hume', 'Rene Descartes'], 'ASC'))
+
+// function removeWordsLastVowel(word) {
+// 	const vowels = ["a", "e", "i", "o", "u"];
+// 	if (word.length = 1 && vowels.includes(word)) return ""
+// 	let lastVowel = -1;
+// 	for (i = 0 ; i < word.length ; i++) {
+// 		if (vowels.includes(word[i].toLowerCase())) {
+// 			lastVowel = i
+// 		}
+// 	}
+// 	if (lastVowel !== -1) {
+// 		return word.substring(0,lastVowel) + (word.length !== lastVowel + 1 ? word.substring(lastVowel+1) : "")
+// 	}
+// }
+
+// console.log(removeWordsLastVowel("taz"))
+
+
+// function reverseLegoYoda(text) {
+// 	let sentences = text.split(". ")
+// 	console.log(sentences)
+// 	let output = sentences.map(item => phraseFlipper(item))
+// 	return output.join(". ") +"."
+// }
+
+// function phraseFlipper(text) {
+// 	let beginning = decapitalize(text.split(", ")[0])
+// 	let ending = capitalize(text.split(", ")[1].replace(".",""))
+
+// 	return ending + " " + beginning;
+// }
+
+// function capitalize(str) {
+// 	let output = ""
+// 	for (let i = 0; i < str.length; i++) {
+// 		if (i === 0) {output += str[i].toUpperCase()}
+// 		else {output += str[i]}
+// 	}
+// 	return output
+// }
+
+// function decapitalize(str) {
+// 	let output = ""
+// 	for (let i = 0; i < str.length; i++) {
+// 		if (i === 0) {output += str[i].toLowerCase()}
+// 		else {output += str[i]}
+// 	}
+// 	return output
+// }
+
+// console.log(reverseLegoYoda("Hit you with my stick, I shall."))
+// console.log(reverseLegoYoda("Rejected me, my crush has. Ketamine, I need."))
 
 // function routeTracer(grid, input) {
 // 	let myPos = []

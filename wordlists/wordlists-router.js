@@ -7,9 +7,19 @@ const admin_id = 30;
 
 
 router.get("/", (req, res) => {
+  Wordlists.getAllApproved()
+    .then(wordlists => {
+      res.status(200).json(wordlists);
+    })
+    .catch(err => {
+      res.status(500).json({ errorMessage: "error getting data" });
+    });
+});
+
+router.get("/all", (req, res) => {
   Wordlists.getAll()
-    .then(users => {
-      res.status(200).json(users);
+    .then(wordlists => {
+      res.status(200).json(wordlists);
     })
     .catch(err => {
       res.status(500).json({ errorMessage: "error getting data" });
@@ -54,6 +64,7 @@ router.get("/:id", (req, res) => {
 
 router.post("/", restricted, (req, res) => {
   const body = req.body;
+  delete body.approved;
   body.wordlist = wordlistValidator(body.wordlist).split(",").map(item => item.trim()).filter(item => item.length > 0).join(",")
   body.user_id = req.decodedJwt.id;
   if (body.wordlist && body.title) {
@@ -69,7 +80,21 @@ router.post("/", restricted, (req, res) => {
   }
 });
 
-
+router.put("/approve/:id", restricted, (req,res) => {
+  const {id} = req.params;
+  if (req.decodedJwt.id === 30) {
+    Wordlists.update(id, {approved: true})
+    .then( wordlist => {
+      res.status(200).json({message: `puzzle ${id} has been approved.`}) 
+    })
+    .catch(err => {
+        res.status(500).json({message: 'Unable to update', error: err})
+    })
+  }
+  else {
+      res.status(401).json({message: "come on man"})
+  }
+})
 
 router.put("/:id", restricted, (req, res) => {});
 
