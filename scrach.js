@@ -1,3 +1,53 @@
+function codeCracker(string) {
+	let codes = []
+	for (let i = 0 ; i < string.length; i++) {
+		codes.push(string.charCodeAt(i))
+	}
+	return codes.map(item => 
+		String(item).split("").map(digit => Number(digit)).reduce((acc,val) => acc + val), 0)
+}
+console.log(codeCracker("hello"))
+
+function routeTracer(grid, input) {
+	let myPos = []
+	let items = ["&", "$", "#"]
+	let myitems = ""
+	grid.map((item, row) => {
+		item.map((tile, col) => {
+			if (tile === "@") {
+					myPos = [row, col]
+			}
+		})
+	})
+	for (i = 0; i < input.length; i++) {
+		console.log(input[i])
+		switch(input[i]) {
+			case "l":
+				console.log(myPos)
+				myPos = [myPos[0], myPos[1]-1]
+				console.log(myPos)
+				break
+			case "r":
+				myPos = [myPos[0], myPos[1]+1]
+				break
+			case "u":
+				myPos = [myPos[0]-1, myPos[1]]
+				break
+			case "d":
+				myPos = [myPos[0]+1, myPos[1]]
+				break
+		}
+		if (items.includes(grid[myPos[0]][myPos[1]]) ) {
+			myitems += grid[myPos[0]][myPos[1]];
+		}
+		console.log(myPos)
+		grid[myPos[0]][myPos[1]] = "x";
+	}
+	
+	return {route: grid, items: myitems}
+}
+
+
 function sortContacts(names, sort) {
 	if (!names) return []
 	
@@ -82,44 +132,6 @@ console.log(sortContacts(['John Locke', 'Thomas Aquinas', 'David Hume', 'Rene De
 // console.log(reverseLegoYoda("Hit you with my stick, I shall."))
 // console.log(reverseLegoYoda("Rejected me, my crush has. Ketamine, I need."))
 
-// function routeTracer(grid, input) {
-// 	let myPos = []
-// 	let items = ["&", "$", "#"]
-// 	let myitems = ""
-// 	grid.map((item, row) => {
-// 		item.map((tile, col) => {
-// 			if (tile === "@") {
-// 					myPos = [row, col]
-// 			}
-// 		})
-// 	})
-// 	for (i = 0; i < input.length; i++) {
-// 		console.log(input[i])
-// 		switch(input[i]) {
-// 			case "l":
-// 				console.log(myPos)
-// 				myPos = [myPos[0], myPos[1]-1]
-// 				console.log(myPos)
-// 				break
-// 			case "r":
-// 				myPos = [myPos[0], myPos[1]+1]
-// 				break
-// 			case "u":
-// 				myPos = [myPos[0]-1, myPos[1]]
-// 				break
-// 			case "d":
-// 				myPos = [myPos[0]+1, myPos[1]]
-// 				break
-// 		}
-// 		if (items.includes(grid[myPos[0]][myPos[1]]) ) {
-// 			myitems += grid[myPos[0]][myPos[1]];
-// 		}
-// 		console.log(myPos)
-// 		grid[myPos[0]][myPos[1]] = "x";
-// 	}
-	
-// 	return {route: grid, items: myitems}
-// }
 
 // let grid = [
 // 	["-", "-", "-", "#"],
