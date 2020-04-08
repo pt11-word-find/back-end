@@ -1,3 +1,56 @@
+console.log(squish([1, 2, 3, 4, 5], "right"))
+// [[1, 2, 3, 4, 5], [3, 3, 4, 5], [6, 4, 5], [10, 5], [15]]
+
+function squish(arr, dir) {
+	if (arr.length <=1) return arr
+	let output = [];
+	let done = false;
+	output.push(arr)
+	if (dir === "left") {
+		while (!done) {
+			arr = squishLeft(arr)
+			output.push(arr)
+			if (output[output.length -1 ].length === 1) done = true
+		}
+	} if (dir === "right") {
+		while (!done) {
+			arr = squishRight(arr)
+			output.push(arr)
+			if (output[output.length -1 ].length === 1) done = true
+		}
+	}
+	return output
+}
+
+function squishLeft(arr) {
+	let output = []
+	for (let i = 1; i < arr.length; i++) {
+		if (i === 1) {
+			output.push(arr[i] + arr[i-1])
+		} else {
+			output.push(arr[i])
+		}
+	}
+	console.log(output)
+	return output
+}
+
+function squishRight(arr) {
+	let output = []
+	for (let i = arr.length-2 ; i >= 0 ; i--) {
+		if (i === arr.length-2) {
+			output.unshift(arr[arr.length-1] + arr[arr.length-2])
+		} else {
+			output.unshift(arr[i])
+		}
+	}
+	console.log(output)
+	return output
+}
+
+
+
+
 function codeCracker(string) {
 	let codes = []
 	for (let i = 0 ; i < string.length; i++) {
@@ -6,7 +59,7 @@ function codeCracker(string) {
 	return codes.map(item => 
 		String(item).split("").map(digit => Number(digit)).reduce((acc,val) => acc + val), 0)
 }
-console.log(codeCracker("hello"))
+
 
 function routeTracer(grid, input) {
 	let myPos = []
