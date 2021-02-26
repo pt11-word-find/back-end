@@ -2,7 +2,7 @@ const router = require('express').Router();
 const Users = require('./users-model');
 const restricted = require("../auth/restricted-middleware");
 
-const admin_id = 30;
+const admin_id = 2;
 
 router.get("/", (req,res) => {
     Users.getAll().then(users =>
